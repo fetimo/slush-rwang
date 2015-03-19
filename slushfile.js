@@ -1,6 +1,5 @@
 /*
- * slush-ang
- * https://github.com/mmoats/slush-ang
+ * slush-rwang
  *
  * Copyright (c) 2014, Matt Moats
  * Licensed under the MIT license.
@@ -21,7 +20,6 @@ gulp.task('default', function(done) {
     }], function(answers) {
         answers.nameDashed = _.slugify(answers.moduleName);
         answers.modulename = _.camelize(answers.nameDashed);
-        console.log(answers);
         gulp.src(__dirname + '/app-structure/**/*')
             .pipe(template(answers))
             .pipe(rename(function(path) {
@@ -41,7 +39,6 @@ gulp.task('default', function(done) {
                         done();
                     });
             });
-
     });
 });
 
@@ -173,10 +170,17 @@ gulp.task('filter', function(done) {
         gulp.src(__dirname + '/templates/filter.js')
             .pipe(template(answers))
             .pipe(rename(answers.filterName + '.filter.js'))
-            .pipe(conflict('./'))
-            .pipe(gulp.dest('./'))
+            .pipe(conflict('./app/filters'))
+            .pipe(gulp.dest('./app/filters'))
             .on('finish', function() {
-                done();
+                gulp.src(__dirname + '/templates/filter.spec.js')
+                    .pipe(template(answers))
+                    .pipe(rename(answers.filterName + '.filter.spec.js'))
+                    .pipe(conflict('./app/filters'))
+                    .pipe(gulp.dest('./app/filters'))
+                    .on('finish', function() {
+                        done();
+                    });
             });
     });
 });

@@ -1,14 +1,22 @@
-# slush-rwang 
+# slush-rwang
 
-Redweb's Angular Scaffolding tool
+Redweb's Angular Scaffolding tool.
 
-> slush rwang
+Provides:
+
+* application structure
+* basic unit tests
+* test runner
+* karma.conf management
+
+> $ slush rwang
+> $ npm install && bower install
 
 ## Getting Started
 
 Install slush and slush-rwang globally:
 
-`npm i -g gulp slush slush-rwang`
+`npm -g gulp slush slush-rwang`
 
 ### Usage
 Use `slush rwang` to scaffold out a new component
