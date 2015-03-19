@@ -1,0 +1,36 @@
+# Controllers
+
+All controllers used in this Angular application should be placed in this
+folder, even if they're only used in one place by one module. We want to be
+able to show a developer new to a project all the moving parts at a glance.
+
+## What?
+
+Controllers are used to:
+
+- Set initial states of `$scope` objects
+- Add behaviour to `$scope` objects
+
+## How
+
+Here's an example controller:
+
+    (function() {
+        'use strict';
+
+        // Note: we're creating a sub module 'controller' of 'moduleName'
+        angular.module('moduleName.controller', [])
+            .controller('moduleNameControllerName', ['$scope', '$rootScope', function($scope, $rootScope) {
+                console.log('moduleNameControllerName registered with $scope:', $scope);
+
+                $scope.world = 'World';
+            }]);
+    })();
+
+Here's how you'd use that controller in a view:
+
+    <div data-ng-controller="moduleNameControllerName">
+    </div>
+
+
+__What happens when we want to have two controllers under `moduleName`?__

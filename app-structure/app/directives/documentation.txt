@@ -1,0 +1,50 @@
+# Directives
+
+All directives used in this Angular application should be placed in this
+folder, even if they're only used in one place by one module. We want to be
+able to show a developer new to a project all the moving parts at a glance.
+
+## What?
+
+Directives are used when:
+
+- You need to do any DOM manipulation.
+- You have a repeated widget or section of code that you want to consolidate
+  into one component.
+- You want to wrap arbitrary content in markup (lightboxes, modal windows,
+  etc...)
+- You need to listen to DOM events.
+
+## How
+
+Here's an example directive:
+
+    (function() {
+        'use strict';
+
+        // Note: we're creating a sub module 'directive' of 'rwModuleName'
+        angular.module('rwModuleName.directive', [])
+            .directive('rwModuleName', function() {
+                return {
+                    restrict: 'A',
+                    replace: 'true',
+                    scope: {
+                        world: '=world'
+                    },
+                    templateUrl: 'js/app/templates/directive/template.html',
+                    link: function(scope, elem, attrs) {
+                        console.log('rwModuleName with scope: ', scope);
+                    }
+                }
+            });
+    })();
+
+Here's how you'd use that directive in a view:
+
+    <div data-rw-module-name data-world="world"></div>
+
+And in your controller...
+
+    .controller('...', [function() {
+        $scope.world = 'World!';
+    }]);

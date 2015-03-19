@@ -1,0 +1,57 @@
+# Modules
+
+You may have noticed that we have packaged our components in modules already.
+This may make an additional modules folder seem a bit redundant, however there
+is a clear benefit.
+
+Modules in this folder should be used to bring together components and if
+necessary configure them.
+
+## How
+
+Here's an example:
+
+    (function() {
+        'use strict';
+
+        angular.module('moduleName.module', ['moduleName.controller'])
+            .run(['$rootScope', '$log', function($rootScope, $log) {
+                $log.log('moduleName.module instantiated with ID: ' + $rootScope.$id);
+            }]);
+    })();
+
+In this example we're bringing moduleName.controller, moduleName.listing, and
+moduleName.service into one module called moduleName.module. There are a few
+benefits to grouping our components like this explicitly:
+
+- You know where to find a module and clearly see all of its dependencies
+- You know where to go to configure a module
+- In applications that use routing, you'd use this file to define how
+  controllers are assigned to views.
+
+You can then use this module to do one of two things:
+
+1. Declare this module on the page as an application, allowing you to deliver
+   a collection of components on a per-view basis - like so:
+
+    // In your view
+    <div data-ng-app="moduleName.module" role="main">
+        <!-- Components inside module -->
+    </div>
+
+2. Bind this module to your main application...
+
+    // In app.js
+    (function() {
+        'use strict';
+
+        var app = angular.module('app', ['moduleNameA.module', 'moduleNameB.module', 'moduleNameC.module' ])
+            .run(['$rootScope', '$log', function($rootScope, $log) {
+                $log.log('app instantiated with ID: ' + $rootScope.$id);
+            }]);
+    })();
+
+    // In your view
+    <div data-ng-app="app" role="main">
+        <!-- Components inside app -->
+    </div>

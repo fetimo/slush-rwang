@@ -1,0 +1,14 @@
+# Templates
+
+All templates used by this angular application should be placed in one of
+these two sub folders:
+
+- directives
+- views
+
+Templates that are used by directives should be placed in the directives
+subfolder.
+
+Templates that are views of your angular application should be placed in the
+views subfolder. This is generally only used when you're using routing and are
+assigning controllers to templates in your module configuration.

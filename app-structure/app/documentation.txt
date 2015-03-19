@@ -1,0 +1,14 @@
+# Application root
+
+This directory is the root of this Angular app.
+
+Folders have been created for the types of components this application may
+contain, these are:
+
+- controllers
+- directives
+- factories
+- filters
+- modules
+- services
+- templates

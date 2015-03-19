@@ -10,38 +10,52 @@ var gulp = require('gulp'),
     conflict = require('gulp-conflict'),
     template = require('gulp-template'),
     rename = require('gulp-rename'),
-    inquirer = require('inquirer');
+    inquirer = require('inquirer'),
+    _ = require('underscore.string');
 
 gulp.task('default', function(done) {
     inquirer.prompt([{
         name: 'moduleName',
-        message: 'Module Name?',
-        default: 'module'
+        message: 'App name?',
+        default: getNameProposal()
     }], function(answers) {
-        gulp.src(__dirname + '/module/**')
+        answers.nameDashed = _.slugify(answers.moduleName);
+        answers.modulename = _.camelize(answers.nameDashed);
+        console.log(answers);
+        gulp.src(__dirname + '/app-structure/**/*')
             .pipe(template(answers))
             .pipe(rename(function(path) {
-                path.dirname += '/' + answers.moduleName;
+                if (path.basename[0] === '_') {
+                    path.basename = '.' + path.basename.slice(1);
+                }
             }))
             .pipe(conflict('./'))
             .pipe(gulp.dest('./'))
             .on('finish', function() {
-                done();
+                gulp.src(__dirname + '/templates/module.js')
+                    .pipe(template(answers))
+                    .pipe(rename(answers.moduleName + '.module.js'))
+                    .pipe(conflict('./app/modules'))
+                    .pipe(gulp.dest('./app/modules'))
+                    .on('finish', function() {
+                        done();
+                    });
             });
+
     });
 });
 
 gulp.task('module', function(done) {
     inquirer.prompt([{
         name: 'moduleName',
-        message: 'Module Name?',
-        default: 'module'
+        message: 'Module name?',
+        default: getNameProposal()
     }], function(answers) {
         gulp.src(__dirname + '/templates/module.js')
             .pipe(template(answers))
-            .pipe(rename(answers.moduleName + '.js'))
-            .pipe(conflict('./'))
-            .pipe(gulp.dest('./'))
+            .pipe(rename(answers.moduleName + '.module.js'))
+            .pipe(conflict('./app/modules'))
+            .pipe(gulp.dest('./app/modules'))
             .on('finish', function() {
                 done();
             });
@@ -51,20 +65,27 @@ gulp.task('module', function(done) {
 gulp.task('controller', function(done) {
     inquirer.prompt([{
         name: 'moduleName',
-        message: 'Module Name?',
-        default: 'module'
+        message: 'Module name?',
+        default: getNameProposal()
     }, {
         name: 'controllerName',
-        message: 'Controller Name?',
+        message: 'Controller name?',
         default: 'controller'
     }], function(answers) {
         gulp.src(__dirname + '/templates/controller.js')
             .pipe(template(answers))
             .pipe(rename(answers.controllerName + '.controller.js'))
-            .pipe(conflict('./'))
-            .pipe(gulp.dest('./'))
+            .pipe(conflict('./app/controllers'))
+            .pipe(gulp.dest('./app/controllers'))
             .on('finish', function() {
-                done();
+                gulp.src(__dirname + '/templates/controller.spec.js')
+                    .pipe(template(answers))
+                    .pipe(rename(answers.controllerName + '.controller.spec.js'))
+                    .pipe(conflict('./app/controllers'))
+                    .pipe(gulp.dest('./app/controllers'))
+                    .on('finish', function() {
+                        done();
+                    });
             });
     });
 });
@@ -72,20 +93,27 @@ gulp.task('controller', function(done) {
 gulp.task('directive', function(done) {
     inquirer.prompt([{
         name: 'moduleName',
-        message: 'Module Name?',
-        default: 'module'
+        message: 'Module name?',
+        default: getNameProposal()
     }, {
         name: 'directiveName',
-        message: 'Directive Name?',
+        message: 'Directive name?',
         default: 'directive'
     }], function(answers) {
         gulp.src(__dirname + '/templates/directive.js')
             .pipe(template(answers))
             .pipe(rename(answers.directiveName + '.directive.js'))
-            .pipe(conflict('./'))
-            .pipe(gulp.dest('./'))
-            .on('finish', function() {
-                done();
+            .pipe(conflict('./app/directives'))
+            .pipe(gulp.dest('./app/directives'))
+            .on('finish', function () {
+                gulp.src(__dirname + '/templates/directive.spec.js')
+                    .pipe(template(answers))
+                    .pipe(rename(answers.directiveName + '.directive.spec.js'))
+                    .pipe(conflict('./app/directives'))
+                    .pipe(gulp.dest('./app/directives'))
+                    .on('finish', function() {
+                        done();
+                    });
             });
     });
 });
@@ -93,18 +121,18 @@ gulp.task('directive', function(done) {
 gulp.task('factory', function(done) {
     inquirer.prompt([{
         name: 'moduleName',
-        message: 'Module Name?',
-        default: 'module'
+        message: 'Module name?',
+        default: getNameProposal()
     }, {
         name: 'factoryName',
-        message: 'Factory Name?',
+        message: 'Factory name?',
         default: 'factory'
     }], function(answers) {
         gulp.src(__dirname + '/templates/factory.js')
             .pipe(template(answers))
             .pipe(rename(answers.factoryName + '.factory.js'))
-            .pipe(conflict('./'))
-            .pipe(gulp.dest('./'))
+            .pipe(conflict('./app/factories'))
+            .pipe(gulp.dest('./app/factories'))
             .on('finish', function() {
                 done();
             });
@@ -114,18 +142,18 @@ gulp.task('factory', function(done) {
 gulp.task('service', function(done) {
     inquirer.prompt([{
         name: 'moduleName',
-        message: 'Module Name?',
-        default: 'module'
+        message: 'Module name?',
+        default: getNameProposal()
     }, {
         name: 'serviceName',
-        message: 'Service Name?',
+        message: 'Service name?',
         default: 'service'
     }], function(answers) {
         gulp.src(__dirname + '/templates/service.js')
             .pipe(template(answers))
             .pipe(rename(answers.serviceName + '.service.js'))
-            .pipe(conflict('./'))
-            .pipe(gulp.dest('./'))
+            .pipe(conflict('./app/services'))
+            .pipe(gulp.dest('./app/services'))
             .on('finish', function() {
                 done();
             });
@@ -135,11 +163,11 @@ gulp.task('service', function(done) {
 gulp.task('filter', function(done) {
     inquirer.prompt([{
         name: 'moduleName',
-        message: 'Module Name?',
-        default: 'module'
+        message: 'Module name?',
+        default: getNameProposal()
     }, {
         name: 'filterName',
-        message: 'Filter Name?',
+        message: 'Filter name?',
         default: 'filter'
     }], function(answers) {
         gulp.src(__dirname + '/templates/filter.js')
@@ -152,3 +180,12 @@ gulp.task('filter', function(done) {
             });
     });
 });
+
+function getNameProposal () {
+  var path = require('path');
+  try {
+    return require(path.join(process.cwd(), 'package.json')).name;
+  } catch (e) {
+    return path.basename(process.cwd());
+  }
+}

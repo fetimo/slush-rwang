@@ -1,0 +1,16 @@
+# Filters
+
+All filters used in this Angular application should be placed in this
+folder, even if they're only used in one place by one module. We want to be
+able to show a developer new to a project all the moving parts at a glance.
+
+## What?
+
+Filters are used when:
+
+- You need to format the value of an expression for display
+- You need to refine a dataset based on a value
+
+## How
+
+For details on usage please see the [angular JS docs](https://code.angularjs.org/1.2.25/docs/guide/filter);

@@ -1,11 +1,11 @@
 {
-  "name": "slush-ang",
-  "description": "AngularJS CLI for modular components",
-  "version": "0.1.1",
-  "homepage": "https://github.com/mmoats/slush-ang",
+  "name": "slush-rwang",
+  "description": "AngularJS CLI for modular components - tailored for Redweb.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/mmoats/slush-rwang",
   "author": {
-    "name": "mmoats",
-    "email": "mattmoats@mattmoats.com"
+    "name": "Tim Stone",
+    "email": "timstone@redweb.com"
   },
   "repository": {
     "type": "git",
@@ -35,9 +35,14 @@
     "gulp-template": "^3.0.0",
     "gulp-util": "^3.0.3",
     "inquirer": "^0.8.0",
-    "slush": "^1.0.1"
+    "slush": "^1.0.1",
+    "underscore.string": "^2.3.3"
+  },
+  "devDependencies": {
+      "karma": "^0.12.0"
   },
   "keywords": [
     "slushgenerator"
-  ]
+],
+  "private": true
 }

@@ -1,0 +1,43 @@
+# Services
+
+All services used in this angular application should be placed in this folder,
+even if they're only used in one place by one module. We want to be able to
+show a developer new to a project all the moving parts at a glance.
+
+## What?
+
+Services are used when:
+
+- You need to reuse functions across your application.
+- You want to only define data structures once across your application (think API endpoints etc...)
+
+## How
+
+Here's an example service:
+
+    (function() {
+        'use strict'
+
+        angular.module('moduleName.service', [])
+            .service('helpers', function() {
+
+                /**
+                 * A safe way to use console.log without breaking older browsers.
+                 *
+                 * @param message : string,
+                 * the message you want to appear in the log
+                 *
+                 * @param useAlert : bool
+                 * Set to true if you want to run an alert when the console is
+                 * unavailable.
+                 */
+                this.log = function (message, useAlert) {
+                    if (typeof console == "object") {
+                        console.log(message);
+                    } else if (useAlert) {
+                        alert(message);
+                    }
+                }
+
+            });
+    })();
