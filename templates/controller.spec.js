@@ -2,8 +2,6 @@
 
 describe('<%= controllerName %> controller', function () {
 
-    angular.module('<%= moduleName %>', []);
-
     var createController, scope, $location;
 
     beforeEach(module('<%= moduleName %>'));

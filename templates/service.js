@@ -8,9 +8,9 @@
     /**
      * Service broken out into an extension of the main module file.
      */
-    .service('<%= moduleName %>.services.<%= serviceName %>', [ , function () {
+    .service('<%= serviceName %>', function () {
         return {
 
         };
-    }]);
+    });
 })();

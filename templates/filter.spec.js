@@ -1,6 +1,6 @@
 describe('filter', function() {
 
-    beforeEach(module('<%= moduleName %>.filters.<%= filterName %>'));
+    beforeEach(module('<%= moduleName %>'));
 
     describe('<%= filterName %>', function() {
         it('should be defined',

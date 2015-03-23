@@ -131,7 +131,14 @@ gulp.task('factory', function(done) {
             .pipe(conflict('./app/factories'))
             .pipe(gulp.dest('./app/factories'))
             .on('finish', function() {
-                done();
+                gulp.src(__dirname + '/templates/factory.spec.js')
+                    .pipe(template(answers))
+                    .pipe(rename(answers.factoryName + '.factory.spec.js'))
+                    .pipe(conflict('./app/factories'))
+                    .pipe(gulp.dest('./app/factories'))
+                    .on('finish', function() {
+                        done();
+                    });
             });
     });
 });
@@ -152,7 +159,14 @@ gulp.task('service', function(done) {
             .pipe(conflict('./app/services'))
             .pipe(gulp.dest('./app/services'))
             .on('finish', function() {
-                done();
+                gulp.src(__dirname + '/templates/service.spec.js')
+                    .pipe(template(answers))
+                    .pipe(rename(answers.serviceName + '.service.spec.js'))
+                    .pipe(conflict('./app/services'))
+                    .pipe(gulp.dest('./app/services'))
+                    .on('finish', function() {
+                        done();
+                    });
             });
     });
 });

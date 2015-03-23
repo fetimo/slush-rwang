@@ -7,9 +7,9 @@
     /**
      * Factory broken out into an extension of the main module file.
      */
-    .factory('<%= moduleName %>.factories.<%= factoryName %>', [ , function () {
+    .factory('<%= factoryName %>', function () {
         return {
 
         };
-    }]);
+    });
 })();
