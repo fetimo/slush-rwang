@@ -10,6 +10,7 @@ Provides:
 * karma.conf management
 
 > $ slush rwang
+
 > $ npm install && bower install
 
 ## Getting Started
